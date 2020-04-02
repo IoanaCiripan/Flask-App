@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{{ project.name }} - {{ page }}</title>
+		
+		<!-- Meta tags -->
+		<meta charset = "UTF-8">
+		<meta name = "viewport" content="width=device-width, initial-scale=1.0">
+		
+		<!-- CSS stylesheets -->
+		<link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+		<link rel = "stylesheet" href = "{{ url_for('static', filename='stylesheets/main.css') }}">
+		
+		<!-- JavaScript files -->
+		<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src = "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	</head>
+	<body class = "bg-light">
+		<div id = "header" class = "container-fluid bg-dark">
+			<div class = "row">
+				<div class = "col-sm-12 col-md-12 col-lg-12 col-xl-12">
+					<div class = "navbar navbar-light navbar-expand-sm bg-dark navbar-dark">
+						<strong class="navbar-brand">
+							{{ project.name }}
+						</strong>
+						<ul id = "navigation-menu" class = "navbar-nav">
+							<li class = "nav-item">
+								<a class = "nav-link" href = "/home">Home</a>
+							</li>
+							<li class = "nav-item">
+								<a class = "nav-link" href = "/add">Add</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id = "content" class = "container-fluid bg-light">
+			<div class = "row">
+				<div class = "col-sm-12 col-md-12 col-lg-12 col-xl-12">
+					<br>
+				</div>
+				{% block content %} {% endblock %}
+			</div>
+		</div>
+	</body>
+</html>
