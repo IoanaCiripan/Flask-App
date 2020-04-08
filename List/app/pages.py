@@ -1,15 +1,16 @@
 from .collection import *
 
-collection = Collection("elements")
+people = Collection("people")
 
 project = {
-	"name": "Demo",
-	"element": "element"
+	"name": "Demo"
 }
 
 page = {
 	"home": "Home",
-	"add": "Add " + project["element"],
-	"delete": "Delete " + project["element"],
-	"view": "View " + project["element"]
+	"person_add": "Add person",
+	"person_delete": "Delete person",
+	"person_update": "View person",
+	"person_first": "First person",
+	"person_list": "List people"
 }

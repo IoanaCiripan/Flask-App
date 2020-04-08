@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class = "col-sm-12 col-md-12 col-lg-6 col-xl-6">
+	<h1>{{ page }}</h1>
+    <div class="form-group">
+		Id: <strong>{{ id }}</strong>
+    </div>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        {% include "person.html" %}
+        <div class="form-group">
+        	{{ form.submit() }}
+			<a href = "/delete/{{ id }}">
+				<div class="btn btn-primary">Delete</div>
+			</a>
+        </div>
+		{% include "alert.html" %}
+    </form>
+</div>
+<div class = "col-sm-12 col-md-12 col-lg-6 col-xl-6">
+	{% include "table.html" %}
+</div>
+
+{% endblock %}
