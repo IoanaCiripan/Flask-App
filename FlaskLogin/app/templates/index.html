@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if current_user %}
+        <h1>Hi, {{ current_user }}!</h1>
+    {% else %}
+        <h1>Hi! to view the dashboard you need to login</h1>
+    {% endif %}
+{% endblock %}
