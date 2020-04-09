@@ -12,12 +12,15 @@ from werkzeug.urls import url_parse
 
 @app.route('/')
 @app.route('/index')
+@login_required
 def index():
     #user = {'username': 'aa'}
-    return render_template('index.html', title='Home', user=current_user)
+    return render_template('index.html', title='Home', current_user=current_user)
 
 @app.route('/login', methods=['GET','POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
         username = form.username.data
@@ -29,11 +32,11 @@ def login():
         if mydoc.count() == 0:
             flash('Invalid username or password')
             return redirect(url_for('login'))
-        #login_user(user, remember=form.remember_me.data)
+        login_user(current_user, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
-        return render_template('index.html', current_user=username)
+        return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
 
 
@@ -47,7 +50,7 @@ def register():
         new_user = {"username": username, "email": email, "password": password}
         #UserObj = User(new_user)
         mycol.insert_one(new_user)
-        return render_template('index.html', current_user=username)
+        return redirect(url_for('login'))
     return  render_template('register.html', title='Sign Up', form=form)
 
 
@@ -65,11 +68,3 @@ def load_user(id):
         return mydoc['_id']
     return None
 
-@app.route('/user/<username>')
-@login_required
-def user(username):
-    query = {"username": username}
-    doc = mycol.find_one(query)
-    if doc.count() != 0:
-        return render_template('user.html', user=user)
-    return render_template('index.html')
