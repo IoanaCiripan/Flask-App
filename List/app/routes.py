@@ -19,22 +19,16 @@ def home():
 def person_update(id):
 	message = ""
 	alert = ""
-	form = ViewForm()
+	person = people.get_by_id(id)
+	form = UpdateForm()
 
 	if form.validate_on_submit():
-		element = people.update(
-			id,
-			form.name.data,
-			form.description.data
-		)
-		if element:
+		if person:
 			alert = "alert-success"
 			message = "Element with id {} was edited!".format(id)
+		people.update(id, **form.data)
 	else:
-		element = people.get_by_id(id)
-
-		form.name.data = element["name"]
-		form.description.data = element["description"]
+		form = UpdateForm(**person)
 
 	if people.new_element_added:
 		people.new_element_added = False
@@ -42,7 +36,7 @@ def person_update(id):
 		message = "Element with id {} was added from database!".format(id)
 
 	return render_template(
-		"person_update.html", 
+		"/person/update.html", 
 		project = project.copy(),
 		page = page["person_update"],
 		list = people.get_list(),
@@ -54,13 +48,8 @@ def person_update(id):
 
 @app.route("/person/first", methods = ["GET", "POST"])
 def person_first():
-	return render_template(
-		"/person/first.html", 
-		project = project.copy(),
-		page = page["person_first"],
-		list = people.get_list(),
-		form = form
-	)
+	first_person = people.get_first()
+	return redirect("/person/update/{}".format(first_person["_id"]))
 
 @app.route("/person/list", methods = ["GET", "POST"])
 def person_list():
@@ -68,8 +57,7 @@ def person_list():
 		"/person/list.html", 
 		project = project.copy(),
 		page = page["person_list"],
-		list = people.get_list(),
-		form = form
+		list = people.get_list()
 	)
 
 @app.route("/person/add", methods = ["GET", "POST"])
@@ -79,13 +67,9 @@ def person_add():
 		flash("Add request for element {}".format(
 			form.name.data
 		))
-		element = people.add(
-			form.name.data,
-			form.description.data
-		)
-		people.new_element_added = True
+		id = people.add(**form.data)
 
-		return redirect("/view/{}".format(element))
+		return redirect("/person/update/{}".format(id))
 
 	return render_template(
 		"/person/add.html", 

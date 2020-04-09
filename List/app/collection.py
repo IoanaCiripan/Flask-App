@@ -7,9 +7,10 @@ class Collection():
 		self.table = database[index]
 		self.new_element_added = False
 
-	def add(self, name, description):
-		element = self.format_element(name, description)
+	def add(self, **dictionary):
+		element = self.format_element(**dictionary)
 		result = database[self.index].insert_one(element)
+		self.new_element_added = True
 		return result.inserted_id
 
 	def delete_by_id(self, id):
@@ -17,12 +18,9 @@ class Collection():
 
 		return 1 == result.deleted_count
 
-	def format_element(self, name, description):
-		element = {
-			"name": name,
-			"description": description
-		}
-		return element
+	def get_first(self):
+		result = database[self.index].find_one()
+		return result
 
 	def get_list(self):
 		result = database[self.index].find()
@@ -32,9 +30,13 @@ class Collection():
 		result = database[self.index].find_one({"_id": ObjectId(id)})
 		return result
 
-	def update(self, id, name, description):
+	def format_element (self, **dictionary):
+		return dictionary
+
+	def update(self, id, **dictionary):
+		element = self.format_element(**dictionary)
 		result = database[self.index].update_one(
 			{ "_id": ObjectId(id)},
-			{ "$set": self.format_element(name, description)}
+			{ "$set": self.format_element(element)}
 		)
 		return 1 == result.modified_count

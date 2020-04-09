@@ -3,6 +3,9 @@
 {% block content %}
 
 <div class = "col-sm-12 col-md-12 col-lg-12 col-xl-12">
+	<h1>{{ page }}</h1>
+</div>
+<div class = "col-sm-12 col-md-12 col-lg-12 col-xl-12">
 	<table class = "table table-hover">
 		<thead>
 		    <tr>
@@ -24,12 +27,12 @@
 	                <td>{{ element.cnp }}</td>
 	                <td>{{ element.birthdate }}</td>
 	                <td>{{ element.gender }}</td>
-	                <td>{{ element.service supplier }}</td>
+	                <td>{{ element.service_supplier }}</td>
 	    			<td>
-	    				<a href = "/view/{{ element._id }}">
+	    				<a href = "/person/update/{{ element._id }}">
 	    					<button class="btn btn-primary">View</button>
 	    				</a>
-	    				<a href = "/delete/{{ element._id }}">
+	    				<a href = "/person/delete/{{ element._id }}">
 	    					<button class="btn btn-primary">Delete</button>
 	    				</a>
 	    			</td>

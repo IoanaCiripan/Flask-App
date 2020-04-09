@@ -1,15 +1,11 @@
 from flask_wtf import FlaskForm
+from wtforms.fields.html5 import DateTimeField
+from wtforms import SelectField
 from wtforms import StringField
 from wtforms import TextAreaField
 from wtforms import SubmitField
-from wtforms.validators import DataRequired
-from wtforms.validators import Length
+from .validators import *
 
-name_min_len = 1
-name_max_len = 20
-
-description_min_len = 5
-description_max_len = 200
 
 class PersonForm(FlaskForm):
     name = StringField(
@@ -34,7 +30,7 @@ class PersonForm(FlaskForm):
         "CNP", 
         validators = [
             DataRequired(), 
-            Length(min = name_min_len, max = name_max_len)
+            validate_cnp
         ],
         render_kw = {"class": "form-control"}
     )
@@ -43,34 +39,33 @@ class PersonForm(FlaskForm):
         "Number",
         validators = [
             DataRequired(), 
-            Length(min = name_min_len, max = name_max_len)
+            validate_ci_number
         ],
         render_kw = {"class": "form-control"}
     )
 
     ci_seria = StringField(
-        "Seria", 
+        "Seria",
         validators = [
             DataRequired(), 
-            Length(min = name_min_len, max = name_max_len)
+            validate_ci_seria
         ],
         render_kw = {"class": "form-control"}
     )
 
     birthdate = StringField(
-        "Birthdate", 
+        "Birthdate",
         validators = [
-            DataRequired(), 
-            Length(min = name_min_len, max = name_max_len)
+            DataRequired()
         ],
         render_kw = {"class": "form-control"}
     )
 
-    gender = StringField(
+    gender = SelectField(
         "Gender", 
+        choices = genders,
         validators = [
-            DataRequired(), 
-            Length(min = name_min_len, max = name_max_len)
+            DataRequired()
         ],
         render_kw = {"class": "form-control"}
     )
@@ -84,19 +79,17 @@ class PersonForm(FlaskForm):
         render_kw = {"class": "form-control"}
     )
 
-    medicalSubscription = StringField(
+    medical_subscription = StringField(
         "Medical subscription", 
         validators = [
-            DataRequired(), 
-            Length(min = name_min_len, max = name_max_len)
+            Length(max = name_max_len)
         ],
         render_kw = {"class": "form-control"}
     )
 
     medical_history = TextAreaField(
-        "Medical history", 
+        "Medical history",
         [
-            DataRequired(), 
             Length(
                 min = description_min_len, 
                 max = description_max_len
@@ -108,8 +101,7 @@ class PersonForm(FlaskForm):
     observation = StringField(
         "Observation", 
         validators = [
-            DataRequired(), 
-            Length(min = name_min_len, max = name_max_len)
+            Length(min = description_min_len, max = name_max_len)
         ],
         render_kw = {"class": "form-control"}
     )
@@ -120,7 +112,7 @@ class AddForm(PersonForm):
         render_kw = {"class": "btn btn-primary"}
     )
 
-class ViewForm(PersonForm):
+class UpdateForm(PersonForm):
     submit = SubmitField(
     	"Edit",
     	render_kw = {"class": "btn btn-primary"}
