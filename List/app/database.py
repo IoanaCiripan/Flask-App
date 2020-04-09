@@ -5,3 +5,4 @@ client_port = 27017
 
 client = MongoClient(client_host, client_port)
 database = client["database"]
+mycol = database["users"]

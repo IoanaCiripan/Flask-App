@@ -37,6 +37,6 @@ class Collection():
 		element = self.format_element(**dictionary)
 		result = database[self.index].update_one(
 			{ "_id": ObjectId(id)},
-			{ "$set": self.format_element(element)}
+			{ "$set": element}
 		)
 		return 1 == result.modified_count

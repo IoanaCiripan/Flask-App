@@ -12,5 +12,7 @@ page = {
 	"person_delete": "Delete person",
 	"person_update": "View person",
 	"person_first": "First person",
-	"person_list": "List of people"
+	"person_list": "List of people",
+	"login": "Login",
+	"register": "Register"
 }

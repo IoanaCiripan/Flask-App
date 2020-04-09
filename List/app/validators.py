@@ -1,6 +1,7 @@
 from wtforms.validators import ValidationError
 from wtforms.validators import DataRequired
 from wtforms.validators import Length
+from wtforms.validators import Email, EqualTo, ValidationError
 
 name_min_len = 1
 name_max_len = 25
@@ -25,18 +26,6 @@ def validate_cnp(form, field):
 			raise ValidationError("CNP-ul must has 13 caracters!")
 		if field.data.startswith("0"):
 			raise ValidationError("CNP-ul can't begin with 0.")
-		cnp_check = [2, 7, 9, 1, 4, 6, 3, 5, 8, 2, 7, 9]
-
-		k = 0
-
-		for i in range(0, len(cnp_check)):
-			k += int(field.data[i]) * int(cnp_check[i])
-		if k % 11 == int(field.data[12]):
-			return True
-		elif k % 11 == 10 and int(field.data[12]) == 1:
-			return True
-		else:
-			raise ValidationError("This CNP {} is not valid.".format(field.data))
 	else:
 		raise ValidationError("The CNP must contains only digits!")
 
