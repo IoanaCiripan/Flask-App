@@ -64,13 +64,13 @@ class User:
 			mydoc = mycol.find(query)
 			if 0 == mydoc.count():
 				flash('Invalid username or password')
-				return redirect(url_for('login'))
-
-			user_obj = User(username = username)
-			login_user(user_obj, remember=form.remember_me.data)
-			next_page = request.args.get('next')
-			if not next_page or url_parse(next_page).netloc != '':
-				next_page = "/home"
+			else:
+				user_obj = User(username = username)
+				login_user(user_obj, remember=form.remember_me.data)
+				return redirect("/home")
+			#next_page = request.args.get('next')
+			#if not next_page or url_parse(next_page).netloc != '':
+			#	next_page = "/home"
 
 		return render_template(
 			"/login.html", 
@@ -87,7 +87,7 @@ def home():
 		project = project.copy(), 
 		page = page["home"],
 		list = people.get_list(),
-		current_user = current_user
+		is_authenticated = current_user.is_authenticated
 	)
 
 @app.route("/person/update/<id>", methods = ["GET", "POST"])
