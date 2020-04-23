@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+	{% if current_user.is_authenticated %}
+		<div class = "col-sm-12 col-md-12 col-lg-6 col-xl-6">
+			<h1>{{ page }}</h1>
+			{% include "alert.html" %}
+		</div>
+		<div class = "col-sm-12 col-md-12 col-lg-6 col-xl-6">
+			{% include "person/table.html" %}
+		</div>
+	{% else %}
+			<h3>You must login to delete a patient</h3>
+	{% endif %}
+{% endblock %}

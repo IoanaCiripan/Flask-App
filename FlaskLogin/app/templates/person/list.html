@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block content %}
+	{% if current_user.is_authenticated %}
+		<div class = "col-sm-12 col-md-12 col-lg-12 col-xl-12">
+			<h1>{{ page }}</h1>
+		</div>
+		<div class = "col-sm-12 col-md-12 col-lg-12 col-xl-12">
+			<table class = "table table-hover">
+				<thead>
+					<tr>
+						<th scope="col">Name</th>
+						<th scope="col">First name</th>
+						<th scope="col">CNP</th>
+						<th scope="col">Birthdate</th>
+						<th scope="col">Gender</th>
+						<th scope="col">Service supplier</th>
+						<th scope="col"></th>
+						<th scope="col"></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for element in list %}
+						<tr>
+							<td>{{ element.name }}</td>
+							<td>{{ element.first_name }}</td>
+							<td>{{ element.cnp }}</td>
+							<td>{{ element.birthdate }}</td>
+							<td>{{ element.gender }}</td>
+							<td>{{ element.service_supplier }}</td>
+							<td>
+								<a href = "/person/update/{{ element._id }}">
+									<button class="btn btn-primary">View</button>
+								</a>
+								<a href = "/person/delete/{{ element._id }}">
+									<button class="btn btn-primary">Delete</button>
+								</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	{% else %}
+		<h3>You must login</h3>
+	{% endif %}
+{% endblock %}
+

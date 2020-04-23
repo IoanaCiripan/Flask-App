@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class = "col-sm-12 col-md-12 col-lg-6 col-xl-6">
+	<h1>{{ page }} </h1>
+	<p>Welcome to the {{ project.name }}! This is a demo project used for:</p>
+	<ul>
+		<li>to learn different technologies,</li>
+		<li>for testing different technologies,</li>
+		<li>to show progress.</li>
+	</ul>
+	<p>This implementation contains a back-end write in Python, which communicate with a database using <b>pymongo</b> framework. The back-end have services to add, delete, view and to update elements(name and description) stored in database.</p>
+	<p>
+	</p>
+</div>
+<div class = "col-sm-12 col-md-12 col-lg-6 col-xl-6">
+	{% include "person/table.html" %}
+</div>
+
+{% endblock %}
